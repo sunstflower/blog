@@ -1,0 +1,214 @@
+name: Convert Issue to Blog Post
+
+on:
+  issues:
+    types: [opened, edited, labeled, unlabeled, closed, reopened]
+
+jobs:
+  convert-issue:
+    # 只处理带有 'publish' 标签的 Issues
+    if: contains(github.event.issue.labels.*.name, 'publish')
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write  # 需要写入权限来提交文件
+      issues: read     # 需要读取 Issues 权限
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          ref: main  # 确保检出主分支
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+      
+      - name: Install dependencies
+        run: npm ci
+      
+      - name: Process Issue to MDX
+        id: process-issue
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const fs = require('fs');
+            const path = require('path');
+            const { execSync } = require('child_process');
+            const yaml = require('js-yaml');
+            
+            // 获取 Issue 信息
+            const issue = context.payload.issue;
+            const issueNumber = issue.number;
+            const title = issue.title;
+            const body = issue.body || '';
+            const createdAt = issue.created_at;
+            const updatedAt = issue.updated_at;
+            const labels = issue.labels.map(label => label.name).filter(name => name !== 'publish');
+            const isDraft = issue.state === 'closed';
+            
+            console.log(`Processing Issue #${issueNumber}: ${title}`);
+            
+            // 提取 frontmatter，如果有的话
+            let frontmatter = {};
+            let content = body;
+            
+            // 尝试从 Issue body 中提取 YAML frontmatter
+            const frontmatterMatch = body.match(/^---\s*([\s\S]*?)\s*---\s*([\s\S]*)$/);
+            if (frontmatterMatch) {
+              try {
+                frontmatter = yaml.load(frontmatterMatch[1]) || {};
+                content = frontmatterMatch[2].trim();
+                console.log('Found frontmatter in issue body');
+              } catch (error) {
+                console.error('Error parsing frontmatter:', error);
+              }
+            }
+            
+            // 确保必要的 frontmatter 存在
+            frontmatter.title = frontmatter.title || title.replace(/^\[Post\]:\s*/, '').trim();
+            frontmatter.date = frontmatter.date || new Date(createdAt).toISOString().split('T')[0];
+            frontmatter.lastmod = new Date(updatedAt).toISOString().split('T')[0];
+            frontmatter.tags = frontmatter.tags || labels;
+            frontmatter.draft = frontmatter.draft !== undefined ? frontmatter.draft : isDraft;
+            frontmatter.issueNumber = issueNumber; // 添加 Issue 编号以便跟踪
+            
+            // 如果没有设置 summary，尝试从内容中提取
+            if (!frontmatter.summary) {
+              // 去除 Markdown 标记，获取第一段作为摘要
+              const firstParagraph = content.split('\n\n')[0]
+                .replace(/^#.*\n+/, '')
+                .replace(/\[([^\]]+)\]\([^)]+\)/g, '$1') // 移除链接但保留文本
+                .replace(/[*_~`]/g, '') // 移除格式符号
+                .trim();
+              
+              frontmatter.summary = firstParagraph.length > 160 
+                ? firstParagraph.substring(0, 157) + '...' 
+                : firstParagraph;
+            }
+            
+            // 如果没有设置 authors，使用 default
+            if (!frontmatter.authors) {
+              frontmatter.authors = ['default'];
+            }
+            
+            // 生成 slug (用于文件名和 URL)
+            const slug = frontmatter.slug || title
+              .toLowerCase()
+              .replace(/^\[post\]:\s*/i, '')
+              .replace(/[^\w\s-]/g, '')
+              .replace(/\s+/g, '-')
+              .replace(/-+/g, '-')
+              .trim();
+            
+            console.log(`Generated slug: ${slug}`);
+            
+            // 处理 Issue 中的图片
+            async function processImages(content) {
+              const imageDir = path.join('public', 'static', 'images', 'issues', `${issueNumber}`);
+              if (!fs.existsSync(imageDir)) {
+                fs.mkdirSync(imageDir, { recursive: true });
+                console.log(`Created directory: ${imageDir}`);
+              }
+              
+              // 提取所有图片链接
+              const imgRegex = /!\[([^\]]*)\]\((https:\/\/user-images\.githubusercontent\.com\/[^)]+)\)/g;
+              let match;
+              let processedContent = content;
+              let downloadPromises = [];
+              
+              while ((match = imgRegex.exec(content)) !== null) {
+                const [fullMatch, altText, imageUrl] = match;
+                const filename = path.basename(imageUrl).split('?')[0]; // 移除查询参数
+                const localPath = `/static/images/issues/${issueNumber}/${filename}`;
+                
+                console.log(`Found image: ${imageUrl}`);
+                console.log(`Will save to: ${localPath}`);
+                
+                // 添加下载任务
+                downloadPromises.push(
+                  fetch(imageUrl)
+                    .then(response => {
+                      if (!response.ok) throw new Error(`Failed to fetch ${imageUrl}: ${response.status}`);
+                      return response.arrayBuffer();
+                    })
+                    .then(buffer => {
+                      fs.writeFileSync(path.join('public', localPath), Buffer.from(buffer));
+                      console.log(`Downloaded image: ${filename}`);
+                      
+                      // 替换图片链接
+                      processedContent = processedContent.replace(
+                        imageUrl, 
+                        localPath
+                      );
+                    })
+                    .catch(err => console.error(`Error downloading image ${imageUrl}:`, err))
+                );
+              }
+              
+              // 等待所有图片下载完成
+              if (downloadPromises.length > 0) {
+                console.log(`Downloading ${downloadPromises.length} images...`);
+                await Promise.all(downloadPromises);
+                console.log('All images downloaded');
+              }
+              
+              return processedContent;
+            }
+            
+            // 处理图片
+            content = await processImages(content);
+            
+            // 准备 MDX 内容
+            const mdxContent = `---
+${yaml.dump(frontmatter)}---
+
+${content}`;
+            
+            // 保存文件
+            const blogDir = path.join('data', 'blog');
+            if (!fs.existsSync(blogDir)) {
+              fs.mkdirSync(blogDir, { recursive: true });
+            }
+            
+            const filePath = path.join(blogDir, `${slug}.mdx`);
+            fs.writeFileSync(filePath, mdxContent);
+            console.log(`Saved MDX file to: ${filePath}`);
+            
+            // 返回文件路径，供后续步骤使用
+            return { filePath, slug };
+      
+      - name: Commit and push changes
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add data/blog
+          git add public/static/images/issues
+          
+          # 只在有更改时提交
+          if git diff --staged --quiet; then
+            echo "No changes to commit"
+            exit 0
+          fi
+          
+          git commit -m "Blog post from issue #${{ github.event.issue.number }}: ${{ github.event.issue.title }}"
+          git push
+      
+      - name: Add comment to Issue
+        if: success()
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const { slug } = steps['process-issue'].outputs;
+            
+            await github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.payload.issue.number,
+              body: `✅ 博客文章已成功创建！\n\n`+
+                    `文章将在构建完成后可在以下链接访问:\n`+
+                    `${process.env.VERCEL_URL || 'your-site.com'}/blog/${slug}`
+            });

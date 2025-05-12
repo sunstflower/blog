@@ -1,0 +1,53 @@
+name: 博客文章
+description: 创建一篇新的博客文章
+title: "[Post]: "
+labels: ["publish"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ## 博客文章创建指南
+        
+        使用此模板创建新的博客文章。填写后添加 `publish` 标签将自动转换为博客文章。
+        
+        您可以在内容开始处使用 frontmatter（三个短横线包围的 YAML 格式）来设置元数据：
+        
+        ```
+        ---
+        title: 您的标题
+        date: YYYY-MM-DD
+        tags: [标签1, 标签2]
+        summary: 文章简短摘要
+        images: [/static/images/your-image.jpg]
+        authors: [default]
+        layout: PostLayout
+        draft: false
+        ---
+        ```
+        
+        然后在 frontmatter 后面编写您的 Markdown 文章内容。
+        
+  - type: textarea
+    id: content
+    attributes:
+      label: 文章内容
+      description: 在此处使用 Markdown 语法编写您的文章内容
+      placeholder: |
+        ---
+        title: 我的精彩文章
+        date: 2023-11-01
+        tags: [nextjs, 博客]
+        summary: 文章的简短摘要
+        ---
+        
+        # 引言
+        
+        您的文章内容...
+        
+        ## 第一部分
+        
+        更多内容...
+        
+        ![图片描述](https://example.com/image.jpg)
+    validations:
+      required: true
