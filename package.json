@@ -1,11 +1,14 @@
 {
-  "name": "tailwind-nextjs-starter-blog",
+  "name": "kornblixt-blog",
   "version": "2.4.0",
   "private": true,
   "scripts": {
     "start": "next dev",
     "dev": "cross-env INIT_CWD=$PWD next dev",
-    "build": "cross-env INIT_CWD=$PWD next build && cross-env NODE_OPTIONS='--experimental-json-modules' node ./scripts/postbuild.mjs",
+    "build": "cross-env INIT_CWD=$PWD next build",
+    "build:safe": "next build",
+    "build:vercel": "NODE_OPTIONS='--max-old-space-size=4096' next build",
+    "postbuild": "cross-env NODE_OPTIONS='--experimental-json-modules' node ./scripts/postbuild.mjs",
     "serve": "next start",
     "analyze": "cross-env ANALYZE=true next build",
     "lint": "next lint --fix --dir pages --dir app --dir components --dir lib --dir layouts --dir scripts",
