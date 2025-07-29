@@ -29,7 +29,7 @@ const Header = () => {
 
       {/* 导航栏下边框 - 浅色模式，与主装饰线样式一致 */}
       <div
-        className="absolute right-0 bottom-0 left-0 h-0.5 dark:hidden"
+        className="absolute bottom-0 left-0 right-0 h-0.5 dark:hidden"
         style={{
           background: 'linear-gradient(to right, #3b82f6 0%, #2563eb 50%, #1d4ed8 100%)',
           opacity: 0.5,
@@ -38,7 +38,7 @@ const Header = () => {
 
       {/* 导航栏下边框 - 深色模式，与主装饰线样式一致 */}
       <div
-        className="absolute right-0 bottom-0 left-0 hidden h-0.5 dark:block"
+        className="absolute bottom-0 left-0 right-0 hidden h-0.5 dark:block"
         style={{
           background: 'linear-gradient(to right, #60a5fa 0%, #3b82f6 50%, #2563eb 100%)',
           opacity: 0.6,
@@ -47,14 +47,14 @@ const Header = () => {
 
       {/* 导航栏装饰线 - 浅色模式，减少边距与主装饰线一致 */}
       <div
-        className="absolute inset-y-0 left-3 w-0.5 lg:left-4 dark:hidden"
+        className="absolute inset-y-0 left-3 w-0.5 dark:hidden lg:left-4"
         style={{
           backgroundColor: '#3b82f6',
           opacity: 0.4,
         }}
       />
       <div
-        className="absolute inset-y-0 right-3 w-0.5 lg:right-4 dark:hidden"
+        className="absolute inset-y-0 right-3 w-0.5 dark:hidden lg:right-4"
         style={{
           backgroundColor: '#3b82f6',
           opacity: 0.4,
@@ -63,14 +63,14 @@ const Header = () => {
 
       {/* 导航栏装饰线 - 深色模式，减少边距与主装饰线一致 */}
       <div
-        className="absolute inset-y-0 left-3 hidden w-0.5 lg:left-4 dark:block"
+        className="absolute inset-y-0 left-3 hidden w-0.5 dark:block lg:left-4"
         style={{
           backgroundColor: '#60a5fa',
           opacity: 0.5,
         }}
       />
       <div
-        className="absolute inset-y-0 right-3 hidden w-0.5 lg:right-4 dark:block"
+        className="absolute inset-y-0 right-3 hidden w-0.5 dark:block lg:right-4"
         style={{
           backgroundColor: '#60a5fa',
           opacity: 0.5,

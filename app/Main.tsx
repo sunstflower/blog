@@ -11,10 +11,10 @@ export default function Home({ posts }) {
       {/* Hero Section - Zed Style with Dark Mode */}
       <div className="relative py-24 lg:py-32">
         <div className="text-center">
-          <h1 className="mb-8 text-5xl font-bold tracking-tight text-neutral-900 lg:text-7xl xl:text-8xl dark:text-blue-400">
+          <h1 className="mb-8 text-5xl font-bold tracking-tight text-neutral-900 dark:text-blue-400 lg:text-7xl xl:text-8xl">
             Latest
           </h1>
-          <p className="mx-auto max-w-3xl text-xl leading-relaxed text-neutral-600 lg:text-2xl dark:text-neutral-400">
+          <p className="mx-auto max-w-3xl text-xl leading-relaxed text-neutral-600 dark:text-neutral-400 lg:text-2xl">
             {siteMetadata.description}
           </p>
         </div>
@@ -53,7 +53,7 @@ export default function Home({ posts }) {
             return (
               <article
                 key={slug}
-                className={`group relative overflow-hidden rounded-xl border border-neutral-200/50 p-8 transition-all duration-200 hover:border-blue-200/60 hover:shadow-md lg:p-12 dark:border-neutral-700/50 dark:hover:border-blue-400/30 dark:hover:shadow-lg ${
+                className={`group relative overflow-hidden rounded-xl border border-neutral-200/50 p-8 transition-all duration-200 hover:border-blue-200/60 hover:shadow-md dark:border-neutral-700/50 dark:hover:border-blue-400/30 dark:hover:shadow-lg lg:p-12 ${
                   isLarge ? 'lg:p-16' : ''
                 }`}
               >

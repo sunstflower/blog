@@ -121,14 +121,14 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 
           {/* 深色模式装饰线 - 减少边距，位于卡片和边界中间 */}
           <div
-            className="fixed inset-y-0 left-3 z-30 hidden w-0.5 lg:left-4 dark:block"
+            className="fixed inset-y-0 left-3 z-30 hidden w-0.5 dark:block lg:left-4"
             style={{
               background: 'linear-gradient(to bottom, #60a5fa 0%, #3b82f6 50%, #2563eb 100%)',
               opacity: 0.6,
             }}
           />
           <div
-            className="fixed inset-y-0 right-3 z-30 hidden w-0.5 lg:right-4 dark:block"
+            className="fixed inset-y-0 right-3 z-30 hidden w-0.5 dark:block lg:right-4"
             style={{
               background: 'linear-gradient(to bottom, #60a5fa 0%, #3b82f6 50%, #2563eb 100%)',
               opacity: 0.6,
@@ -137,13 +137,13 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 
           {/* 内容区域边界 - 双模式支持 */}
           <div
-            className="fixed inset-y-0 left-4 z-20 hidden w-px lg:block dark:hidden"
+            className="fixed inset-y-0 left-4 z-20 hidden w-px dark:hidden lg:block"
             style={{
               backgroundColor: 'rgba(59, 130, 246, 0.25)',
             }}
           />
           <div
-            className="fixed inset-y-0 right-4 z-20 hidden w-px lg:block dark:hidden"
+            className="fixed inset-y-0 right-4 z-20 hidden w-px dark:hidden lg:block"
             style={{
               backgroundColor: 'rgba(59, 130, 246, 0.25)',
             }}

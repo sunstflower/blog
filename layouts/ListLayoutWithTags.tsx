@@ -28,7 +28,7 @@ function Pagination({ totalPages, currentPage }: PaginationProps) {
   const nextPage = currentPage + 1 <= totalPages
 
   return (
-    <div className="space-y-2 pt-6 pb-8 md:space-y-5">
+    <div className="space-y-2 pb-8 pt-6 md:space-y-5">
       <nav className="flex justify-between">
         {!prevPage && (
           <button
@@ -166,13 +166,13 @@ export default function ListLayoutWithTags({
 
   return (
     <>
-      <div className="pt-6 pb-6">
-        <h1 className="text-3xl leading-9 font-extrabold tracking-tight text-neutral-900 sm:hidden sm:text-4xl sm:leading-10 md:text-6xl md:leading-14 dark:text-blue-400">
+      <div className="pb-6 pt-6">
+        <h1 className="text-3xl font-extrabold leading-9 tracking-tight text-neutral-900 dark:text-blue-400 sm:hidden sm:text-4xl sm:leading-10 md:text-6xl md:leading-14">
           {title}
         </h1>
       </div>
       <div className="flex sm:space-x-24">
-        <div className="relative hidden h-full max-h-screen max-w-[280px] min-w-[280px] flex-wrap overflow-auto rounded-xl border border-neutral-200/50 pt-5 shadow-sm sm:flex dark:border-neutral-700/50">
+        <div className="relative hidden h-full max-h-screen min-w-[280px] max-w-[280px] flex-wrap overflow-auto rounded-xl border border-neutral-200/50 pt-5 shadow-sm dark:border-neutral-700/50 sm:flex">
           {/* 浅色模式背景 */}
           <div
             className="absolute inset-0 rounded-xl dark:hidden"
@@ -193,11 +193,11 @@ export default function ListLayoutWithTags({
 
           <div className="relative z-10 w-full px-6 py-4">
             {pathname.startsWith('/blog') ? (
-              <h3 className="text-primary-500 font-bold uppercase">All Posts</h3>
+              <h3 className="font-bold uppercase text-primary-500">All Posts</h3>
             ) : (
               <Link
                 href={`/blog`}
-                className="hover:text-primary-500 dark:hover:text-primary-400 font-bold text-neutral-700 uppercase dark:text-neutral-300"
+                className="font-bold uppercase text-neutral-700 hover:text-primary-500 dark:text-neutral-300 dark:hover:text-primary-400"
               >
                 All Posts
               </Link>
@@ -207,13 +207,13 @@ export default function ListLayoutWithTags({
                 return (
                   <li key={t} className="my-3">
                     {pathname.split('/tags/')[1] === encodeURI(t) ? (
-                      <h3 className="text-primary-500 inline px-3 py-2 text-sm font-bold uppercase">
+                      <h3 className="inline px-3 py-2 text-sm font-bold uppercase text-primary-500">
                         {`${t} (${tagCounts[t]})`}
                       </h3>
                     ) : (
                       <Link
                         href={`/tags/${t}`}
-                        className="hover:text-primary-500 dark:hover:text-primary-400 px-3 py-2 text-sm font-medium text-neutral-500 uppercase dark:text-neutral-400"
+                        className="px-3 py-2 text-sm font-medium uppercase text-neutral-500 hover:text-primary-500 dark:text-neutral-400 dark:hover:text-primary-400"
                         aria-label={`View posts tagged ${t}`}
                       >
                         {`${t} (${tagCounts[t]})`}
@@ -234,7 +234,7 @@ export default function ListLayoutWithTags({
                 type="text"
                 onChange={(e) => setSearchValue(e.target.value)}
                 placeholder="Search articles"
-                className="focus:border-primary-500 focus:ring-primary-500 dark:focus:border-primary-400 relative z-10 block w-full rounded-xl border border-neutral-300/50 px-4 py-3 text-neutral-900 shadow-sm dark:border-neutral-600/50 dark:text-neutral-100"
+                className="relative z-10 block w-full rounded-xl border border-neutral-300/50 px-4 py-3 text-neutral-900 shadow-sm focus:border-primary-500 focus:ring-primary-500 dark:border-neutral-600/50 dark:text-neutral-100 dark:focus:border-primary-400"
                 style={{
                   backgroundColor: 'transparent',
                 }}
@@ -259,7 +259,7 @@ export default function ListLayoutWithTags({
               />
             </label>
             <svg
-              className="absolute top-3 right-3 z-20 h-5 w-5 text-neutral-400 dark:text-neutral-500"
+              className="absolute right-3 top-3 z-20 h-5 w-5 text-neutral-400 dark:text-neutral-500"
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
               viewBox="0 0 24 24"
@@ -300,7 +300,7 @@ export default function ListLayoutWithTags({
                     <div className="relative z-10 space-y-3">
                       <div className="space-y-4">
                         <div>
-                          <h2 className="text-2xl leading-8 font-bold tracking-tight">
+                          <h2 className="text-2xl font-bold leading-8 tracking-tight">
                             <Link
                               href={`/${path}`}
                               className="text-neutral-900 transition-colors duration-150 hover:text-blue-600 dark:text-blue-400 dark:hover:text-blue-300"
@@ -319,7 +319,7 @@ export default function ListLayoutWithTags({
                       <div className="flex items-center justify-between">
                         <dl>
                           <dt className="sr-only">Published on</dt>
-                          <dd className="text-base leading-6 font-medium text-neutral-500 dark:text-neutral-500">
+                          <dd className="text-base font-medium leading-6 text-neutral-500 dark:text-neutral-500">
                             <time dateTime={date}>{formatDate(date, siteMetadata.locale)}</time>
                           </dd>
                         </dl>

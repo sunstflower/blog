@@ -46,7 +46,7 @@ const MobileNav = () => {
       <button
         aria-label="Toggle Menu"
         onClick={onToggleNav}
-        className="rounded-lg p-2 transition-colors duration-150 hover:bg-neutral-100 lg:hidden dark:hover:bg-neutral-800"
+        className="rounded-lg p-2 transition-colors duration-150 hover:bg-neutral-100 dark:hover:bg-neutral-800 lg:hidden"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -87,7 +87,7 @@ const MobileNav = () => {
             leaveTo="translate-x-full opacity-0"
             unmount={false}
           >
-            <DialogPanel className="fixed top-0 right-0 z-70 h-full w-80 overflow-y-auto bg-white shadow-xl dark:bg-neutral-900">
+            <DialogPanel className="fixed right-0 top-0 z-70 h-full w-80 overflow-y-auto bg-white shadow-xl dark:bg-neutral-900">
               <div className="flex h-full flex-col">
                 {/* Header */}
                 <div className="flex items-center justify-between border-b border-neutral-200 p-6 dark:border-neutral-800">

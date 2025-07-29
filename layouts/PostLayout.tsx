@@ -45,7 +45,7 @@ export default function PostLayout({ content, authorDetails, next, prev, childre
               <dl className="space-y-10">
                 <div>
                   <dt className="sr-only">Published on</dt>
-                  <dd className="text-base leading-6 font-medium text-neutral-500 dark:text-neutral-500">
+                  <dd className="text-base font-medium leading-6 text-neutral-500 dark:text-neutral-500">
                     <time dateTime={date}>
                       {new Date(date).toLocaleDateString(siteMetadata.locale, postDateTemplate)}
                     </time>
@@ -59,9 +59,9 @@ export default function PostLayout({ content, authorDetails, next, prev, childre
           </header>
 
           {/* Main Content */}
-          <div className="grid-rows-[auto_1fr] divide-y divide-neutral-200/30 pb-8 xl:grid xl:grid-cols-4 xl:gap-x-6 xl:divide-y-0 dark:divide-neutral-700/30">
+          <div className="grid-rows-[auto_1fr] divide-y divide-neutral-200/30 pb-8 dark:divide-neutral-700/30 xl:grid xl:grid-cols-4 xl:gap-x-6 xl:divide-y-0">
             {/* Sidebar */}
-            <div className="divide-y divide-neutral-200/30 xl:col-span-1 xl:row-span-2 xl:pb-0 dark:divide-neutral-700/30">
+            <div className="divide-y divide-neutral-200/30 dark:divide-neutral-700/30 xl:col-span-1 xl:row-span-2 xl:pb-0">
               <div className="sticky top-20 rounded-xl border border-neutral-200/50 p-6 shadow-sm dark:border-neutral-700/50">
                 <div className="relative">
                   {/* 浅色模式背景 */}
@@ -88,7 +88,7 @@ export default function PostLayout({ content, authorDetails, next, prev, childre
                       <dl>
                         <dt className="sr-only">Author</dt>
                         <dd>
-                          <ul className="flex flex-wrap justify-center gap-4 sm:space-x-12 xl:block xl:space-y-6 xl:space-x-0">
+                          <ul className="flex flex-wrap justify-center gap-4 sm:space-x-12 xl:block xl:space-x-0 xl:space-y-6">
                             {authorDetails.map((author) => (
                               <li className="flex items-center space-x-2" key={author.name}>
                                 {author.avatar && (
@@ -100,7 +100,7 @@ export default function PostLayout({ content, authorDetails, next, prev, childre
                                     className="h-10 w-10 rounded-full"
                                   />
                                 )}
-                                <dl className="text-sm leading-5 font-medium whitespace-nowrap">
+                                <dl className="whitespace-nowrap text-sm font-medium leading-5">
                                   <dt className="sr-only">Name</dt>
                                   <dd className="text-neutral-900 dark:text-neutral-100">
                                     {author.name}
@@ -126,7 +126,7 @@ export default function PostLayout({ content, authorDetails, next, prev, childre
                       <dl>
                         <dt className="sr-only">Authors</dt>
                         <dd>
-                          <ul className="flex flex-wrap justify-center gap-4 sm:space-x-12 xl:block xl:space-y-6 xl:space-x-0">
+                          <ul className="flex flex-wrap justify-center gap-4 sm:space-x-12 xl:block xl:space-x-0 xl:space-y-6">
                             {authorDetails.map((author) => (
                               <li className="flex items-center space-x-2" key={author.name}>
                                 {author.avatar && (
@@ -138,7 +138,7 @@ export default function PostLayout({ content, authorDetails, next, prev, childre
                                     className="h-10 w-10 rounded-full"
                                   />
                                 )}
-                                <dl className="text-sm leading-5 font-medium whitespace-nowrap">
+                                <dl className="whitespace-nowrap text-sm font-medium leading-5">
                                   <dt className="sr-only">Name</dt>
                                   <dd className="text-neutral-900 dark:text-neutral-100">
                                     {author.name}
@@ -165,7 +165,7 @@ export default function PostLayout({ content, authorDetails, next, prev, childre
                     {/* Tags */}
                     {tags && (
                       <div className="mt-6 border-t border-neutral-200/30 pt-6 dark:border-neutral-700/30">
-                        <h3 className="mb-3 text-xs font-semibold tracking-wide text-neutral-500 uppercase dark:text-neutral-500">
+                        <h3 className="mb-3 text-xs font-semibold uppercase tracking-wide text-neutral-500 dark:text-neutral-500">
                           Tags
                         </h3>
                         <div className="flex flex-wrap gap-2">
@@ -178,7 +178,7 @@ export default function PostLayout({ content, authorDetails, next, prev, childre
 
                     {/* Navigation */}
                     <div className="mt-6 border-t border-neutral-200/30 pt-6 dark:border-neutral-700/30">
-                      <h3 className="mb-3 text-xs font-semibold tracking-wide text-neutral-500 uppercase dark:text-neutral-500">
+                      <h3 className="mb-3 text-xs font-semibold uppercase tracking-wide text-neutral-500 dark:text-neutral-500">
                         Navigation
                       </h3>
                       <div className="space-y-3">
@@ -211,7 +211,7 @@ export default function PostLayout({ content, authorDetails, next, prev, childre
 
             {/* Article Content */}
             <div className="xl:col-span-3 xl:row-span-2 xl:pl-6">
-              <div className="prose dark:prose-invert prose-lg relative max-w-none rounded-xl border border-neutral-200/50 p-8 pt-10 pb-8 shadow-sm lg:p-12 dark:border-neutral-700/50">
+              <div className="prose prose-lg relative max-w-none rounded-xl border border-neutral-200/50 p-8 pb-8 pt-10 shadow-sm dark:prose-invert dark:border-neutral-700/50 lg:p-12">
                 {/* 浅色模式背景 */}
                 <div
                   className="absolute inset-0 rounded-xl dark:hidden"
@@ -253,9 +253,9 @@ export default function PostLayout({ content, authorDetails, next, prev, childre
                   }}
                 />
 
-                <div className="relative z-10 divide-neutral-200/30 text-sm leading-5 font-medium xl:col-start-1 xl:row-start-2 xl:divide-y dark:divide-neutral-700/30">
+                <div className="relative z-10 divide-neutral-200/30 text-sm font-medium leading-5 dark:divide-neutral-700/30 xl:col-start-1 xl:row-start-2 xl:divide-y">
                   <div className="py-4 xl:py-8">
-                    <h2 className="mb-4 text-xs font-semibold tracking-wide text-neutral-500 uppercase dark:text-neutral-500">
+                    <h2 className="mb-4 text-xs font-semibold uppercase tracking-wide text-neutral-500 dark:text-neutral-500">
                       Share & Discuss
                     </h2>
                     <div className="flex flex-wrap items-center gap-4">
@@ -289,7 +289,7 @@ export default function PostLayout({ content, authorDetails, next, prev, childre
                 </div>
               </footer>
 
-              <div className="pt-6 pb-6 text-sm text-neutral-700 dark:text-neutral-300">
+              <div className="pb-6 pt-6 text-sm text-neutral-700 dark:text-neutral-300">
                 <Comments slug={slug} />
               </div>
             </div>

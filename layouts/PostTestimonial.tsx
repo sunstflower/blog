@@ -44,7 +44,7 @@ export default function PostTestimonial({
       <ScrollTopAndComment />
       <article className="mx-auto max-w-5xl">
         {/* Main Testimonial Card - Zed Style */}
-        <div className="relative mb-8 flex w-full flex-col rounded-sm border border-gray-200/50 bg-gradient-to-br from-gray-50 via-blue-50 to-indigo-50 px-6 pt-6 pb-6 shadow-lg dark:border-gray-600/50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-700">
+        <div className="relative mb-8 flex w-full flex-col rounded-sm border border-gray-200/50 bg-gradient-to-br from-gray-50 via-blue-50 to-indigo-50 px-6 pb-6 pt-6 shadow-lg dark:border-gray-600/50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-700">
           {/* Brand/Logo Section */}
           <div className="mb-4">
             <div className="flex items-center gap-3">
@@ -64,7 +64,7 @@ export default function PostTestimonial({
 
           {/* Main Quote Content */}
           <blockquote className="relative mb-6 text-[0.9375rem] tracking-tight text-gray-900 dark:text-white">
-            <h1 className="mb-4 text-2xl leading-tight font-bold text-gray-900 md:text-3xl dark:text-white">
+            <h1 className="mb-4 text-2xl font-bold leading-tight text-gray-900 dark:text-white md:text-3xl">
               {title}
             </h1>
             {content.summary && (
@@ -141,7 +141,7 @@ export default function PostTestimonial({
         <div className="mb-8 grid grid-cols-1 gap-8 lg:grid-cols-5">
           {/* Article Content */}
           <div className="lg:col-span-4">
-            <div className="prose prose-lg dark:prose-invert max-w-none rounded-lg border border-gray-200/50 bg-white p-8 shadow-sm lg:p-12 dark:border-gray-700/50 dark:bg-gray-900">
+            <div className="prose prose-lg max-w-none rounded-lg border border-gray-200/50 bg-white p-8 shadow-sm dark:prose-invert dark:border-gray-700/50 dark:bg-gray-900 lg:p-12">
               {children}
             </div>
           </div>
@@ -152,7 +152,7 @@ export default function PostTestimonial({
               {/* Tags */}
               {tags && tags.length > 0 && (
                 <div className="rounded-lg border border-gray-200/50 bg-white p-4 shadow-sm dark:border-gray-700/50 dark:bg-gray-900">
-                  <h3 className="mb-3 text-xs font-semibold tracking-wide text-gray-500 uppercase dark:text-gray-400">
+                  <h3 className="mb-3 text-xs font-semibold uppercase tracking-wide text-gray-500 dark:text-gray-400">
                     标签
                   </h3>
                   <div className="flex flex-wrap gap-2">
@@ -165,7 +165,7 @@ export default function PostTestimonial({
 
               {/* Navigation */}
               <div className="rounded-lg border border-gray-200/50 bg-white p-4 shadow-sm dark:border-gray-700/50 dark:bg-gray-900">
-                <h3 className="mb-3 text-xs font-semibold tracking-wide text-gray-500 uppercase dark:text-gray-400">
+                <h3 className="mb-3 text-xs font-semibold uppercase tracking-wide text-gray-500 dark:text-gray-400">
                   导航
                 </h3>
                 <div className="space-y-3">
@@ -194,7 +194,7 @@ export default function PostTestimonial({
 
               {/* Share Section */}
               <div className="rounded-lg border border-gray-200/50 bg-white p-4 shadow-sm dark:border-gray-700/50 dark:bg-gray-900">
-                <h3 className="mb-3 text-xs font-semibold tracking-wide text-gray-500 uppercase dark:text-gray-400">
+                <h3 className="mb-3 text-xs font-semibold uppercase tracking-wide text-gray-500 dark:text-gray-400">
                   分享与讨论
                 </h3>
                 <div className="space-y-2">
@@ -231,7 +231,7 @@ export default function PostTestimonial({
         </div>
 
         {/* Comments */}
-        <div className="pt-6 pb-6">
+        <div className="pb-6 pt-6">
           <Comments slug={slug} />
         </div>
       </article>
