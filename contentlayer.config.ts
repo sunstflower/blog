@@ -43,20 +43,11 @@ const icon = fromHtmlIsomorphic(
 )
 
 const computedFields: ComputedFields = {
-  readingTime: { type: 'json', resolve: (doc) => readingTime(doc.body.raw) },
-  slug: {
-    type: 'string',
-    resolve: (doc) => doc._raw.flattenedPath.replace(/^.+?(\/)/, ''),
-  },
-  path: {
-    type: 'string',
-    resolve: (doc) => doc._raw.flattenedPath,
-  },
-  filePath: {
-    type: 'string',
-    resolve: (doc) => doc._raw.sourceFilePath,
-  },
-  toc: { type: 'json', resolve: (doc) => extractTocHeadings(doc.body.raw) },
+  readingTime: { type: 'json', resolve: (doc) => readingTime(doc.body.raw) }, // 阅读时间
+  slug: { type: 'string', resolve: (doc) => doc._raw.flattenedPath.replace(/^.+?(\/)/, '') }, // URL 路径
+  path: { type: 'string', resolve: (doc) => doc._raw.flattenedPath }, // 文件路径
+  filePath: { type: 'string', resolve: (doc) => doc._raw.sourceFilePath }, // 源文件路径
+  toc: { type: 'json', resolve: (doc) => extractTocHeadings(doc.body.raw) }, // 目录
 }
 
 /**
@@ -98,17 +89,20 @@ export const Blog = defineDocumentType(() => ({
   filePathPattern: 'blog/**/*.mdx',
   contentType: 'mdx',
   fields: {
-    title: { type: 'string', required: true },
-    date: { type: 'date', required: true },
-    tags: { type: 'list', of: { type: 'string' }, default: [] },
-    lastmod: { type: 'date' },
-    draft: { type: 'boolean' },
-    summary: { type: 'string' },
-    images: { type: 'json' },
-    authors: { type: 'list', of: { type: 'string' } },
-    layout: { type: 'string' },
-    bibliography: { type: 'string' },
-    canonicalUrl: { type: 'string' },
+    // 必需字段
+    title: { type: 'string', required: true }, // 文章标题
+    date: { type: 'date', required: true }, // 发布日期
+
+    // 可选字段
+    tags: { type: 'list', of: { type: 'string' }, default: [] }, // 标签列表
+    lastmod: { type: 'date' }, // 最后修改日期
+    draft: { type: 'boolean' }, // 是否为草稿
+    summary: { type: 'string' }, // 文章摘要
+    images: { type: 'json' }, // 图片列表
+    authors: { type: 'list', of: { type: 'string' } }, // 作者列表
+    layout: { type: 'string' }, // 布局模板
+    bibliography: { type: 'string' }, // 参考文献
+    canonicalUrl: { type: 'string' }, // 规范链接
   },
   computedFields: {
     ...computedFields,
@@ -133,16 +127,16 @@ export const Authors = defineDocumentType(() => ({
   filePathPattern: 'authors/**/*.mdx',
   contentType: 'mdx',
   fields: {
-    name: { type: 'string', required: true },
-    avatar: { type: 'string' },
-    occupation: { type: 'string' },
-    company: { type: 'string' },
-    email: { type: 'string' },
-    twitter: { type: 'string' },
-    bluesky: { type: 'string' },
-    linkedin: { type: 'string' },
-    github: { type: 'string' },
-    layout: { type: 'string' },
+    name: { type: 'string', required: true }, // 作者姓名（必需）
+    avatar: { type: 'string' }, // 头像
+    occupation: { type: 'string' }, // 职业
+    company: { type: 'string' }, // 公司
+    email: { type: 'string' }, // 邮箱
+    twitter: { type: 'string' }, // Twitter
+    bluesky: { type: 'string' }, // Bluesky
+    linkedin: { type: 'string' }, // LinkedIn
+    github: { type: 'string' }, // GitHub
+    layout: { type: 'string' }, // 布局
   },
   computedFields,
 }))

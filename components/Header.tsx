@@ -1,4 +1,3 @@
-import siteMetadata from '@/data/siteMetadata'
 import headerNavLinks from '@/data/headerNavLinks'
 import Logo from '@/data/logo.svg'
 import Link from './Link'
@@ -83,17 +82,13 @@ const Header = () => {
           {/* Logo - 双模式支持，调整与装饰线的距离 */}
           <Link
             href="/"
-            aria-label={siteMetadata.headerTitle}
+            aria-label="Kornblixt"
             className="ml-3 flex items-center space-x-2 lg:ml-4"
           >
             <Logo className="h-6 w-6 flex-shrink-0" />
-            {typeof siteMetadata.headerTitle === 'string' ? (
-              <div className="hidden text-lg font-bold tracking-tight text-neutral-900 sm:block dark:text-neutral-100">
-                {siteMetadata.headerTitle}
-              </div>
-            ) : (
-              siteMetadata.headerTitle
-            )}
+            <div className="text-lg font-bold tracking-tight text-neutral-900 dark:text-neutral-100">
+              Kornblixt
+            </div>
           </Link>
 
           {/* 中间药丸式导航栏 - 双模式设计 */}
